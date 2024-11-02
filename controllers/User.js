@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import User from "../models/User.js";
+import jwt from 'jsonwebtoken';
 
 // Create new user
 export const postUser = async (req,res) => {
@@ -30,6 +31,7 @@ export const postUser = async (req,res) => {
         res.status(500).json({ success: false, data: error.message });
     }
 } 
+
 
 // update the user by the email
 export const updateUser = async (req,res) => {
@@ -82,7 +84,13 @@ export const loginUser = async (req, res) => {
             return res.status(400).json({ success: false, message: "Invalid Crediantials"});
         }
 
-        res.status(200).json({ success: true, message: "Login Successful" });
+        const token = jwt.sign(
+            { userId: findUser._id, email: findUser.email},
+            process.env.JWT_SECRET,
+            { expiresIn: process.env.JWT_EXPIRES_IN }
+        );
+
+        res.status(200).json({ success: true, message: "Login Successful", token });
 
 
     } 
