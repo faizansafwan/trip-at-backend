@@ -7,7 +7,10 @@ import User from "./routes/User.js";
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000', // Explicitly allow frontend origin
+    credentials: true,
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 
@@ -28,5 +31,5 @@ connection.once( "open", () => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on port ${process.env.PORT}`);
 });
