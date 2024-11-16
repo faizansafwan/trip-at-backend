@@ -1,3 +1,4 @@
+
 import bcrypt from 'bcrypt';
 import User from "../models/User.js";
 import jwt from 'jsonwebtoken';
@@ -32,6 +33,23 @@ export const postUser = async (req,res) => {
     }
 } 
 
+export const getProfile = async (req, res) => {
+    
+    try {
+        const userId = req.user.userId;
+        const user = await User.findById(userId).select("-password");
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" }); // Return here to prevent further execution
+        }
+
+        return res.status(200).json({ success: true, data: user });
+    } 
+    catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
 
 // update the user by the email
 export const updateUser = async (req,res) => {
@@ -54,14 +72,14 @@ export const updateUser = async (req,res) => {
             user.password = hashedPassword;
         }
 
-        if (profilePicture) user.profiePicture = profilePicture;
+        if (profilePicture) user.profilePicture = profilePicture;
 
         const updateUser = await user.save();
 
         res.status(200).json({ success: true, data: updateUser});  
     }
     catch (error) {
-        res.status(500).json({ success: false, message: error.message});
+        res.status(500).json({ success: false, message: error.message });
     }
     
 }
