@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import User from "./routes/User.js";
 import TravelPost from "./routes/TravelPost.js";
 import Contact from "./routes/contact.js";
+import Budget from "./routes/Budget.js";
 
 
 const app = express();
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: true}));
 app.use('/api/user', User);
 app.use('/api/travel', TravelPost);
 app.use('/api/contact', Contact);
+app.use('/api/budget', Budget);
 
 app.get( '/', (req,res) => {
     res.send("Check get request");
