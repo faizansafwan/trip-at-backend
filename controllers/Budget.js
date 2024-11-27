@@ -35,10 +35,7 @@ export const fetchBudget = async (req, res) => {
     try {
         const budgets = await Budget.find(); // Fetch all budgets
 
-        res.status(200).json({
-            message: "Budgets fetched successfully.",
-            data: budgets,
-        });
+        res.status(200).json({ success: true, data: budgets });
     }
     catch (error) {
         res.status(500).json({ message: "Error fetching budgets.", error: error.message });
