@@ -1,9 +1,13 @@
 import express from "express"
-import { fetchBudget, postBudget } from "../controllers/Budget.js"
+import {  fetchBudget, fetchBudgetByEmail, postBudget } from "../controllers/Budget.js";
+import { verifyToken } from '../middlewares/auth.js';
+
 
 const router = express.Router();
 
-router.post("/", postBudget);
-router.get("/", fetchBudget);
+router.post("/", verifyToken, postBudget);
+router.get("/:email", verifyToken, fetchBudgetByEmail);
+router.get("/", verifyToken, fetchBudget);
+
 
 export default router;
