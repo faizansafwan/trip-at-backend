@@ -55,7 +55,7 @@ export const getProfile = async (req, res) => {
 export const updateUser = async (req,res) => {
     try{
         const { email } = req.query;
-        const { firstName, lastName, password, profilePicture } = req.body;
+        const { firstName, lastName, profilePicture } = req.body;
 
         const user = await User.findOne({ email });
 
@@ -65,12 +65,12 @@ export const updateUser = async (req,res) => {
 
         if (firstName) user.firstName = firstName;
         if (lastName) user.lastName = lastName;
-        if (password) {
-            const saltsRound = 10;
-            const hashedPassword = await bcrypt.hash(password, saltsRound);
+        // if (password) {
+        //     const saltsRound = 10;
+        //     const hashedPassword = await bcrypt.hash(password, saltsRound);
 
-            user.password = hashedPassword;
-        }
+        //     user.password = hashedPassword;
+        // }
 
         if (profilePicture) user.profilePicture = profilePicture;
 
