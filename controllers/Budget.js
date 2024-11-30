@@ -53,10 +53,20 @@ export const fetchBudgetByEmail = async (req, res) => {
     }
 }
 
-export const fetchBudget = async (req, res) => {
+export const fetchBudgetById = async (req, res) => {
     try {
+
+        const { id } = req.params;
+
+        // Validate email presence
+        if (!id) {
+            return res.status(400).json({ error: 'Id parameter is required.' });
+        }
         
-        const budgets = await Budget.find(); // Fetch all budgets
+        const budgets = await Budget.findById(id); // Fetch all budgets
+        if (!budgets) {
+            return res.status(404).json({ message: 'Budget not found.' });
+        }
 
         res.status(200).json({ success: true, data: budgets });
     }
