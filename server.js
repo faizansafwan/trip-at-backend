@@ -7,6 +7,7 @@ import User from "./routes/User.js";
 import TravelPost from "./routes/TravelPost.js";
 import Contact from "./routes/contact.js";
 import Budget from "./routes/Budget.js";
+import Accomadation from "./routes/Accomadation.js";
 
 
 const app = express();
@@ -22,6 +23,7 @@ app.use('/api/user', User);
 app.use('/api/travel', TravelPost);
 app.use('/api/contact', Contact);
 app.use('/api/budget', Budget);
+app.use('/api/accomadation', Accomadation);
 
 app.get( '/', (req,res) => {
     res.send("Check get request");
