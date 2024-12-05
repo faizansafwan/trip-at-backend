@@ -2,6 +2,7 @@
 import bcrypt from 'bcrypt';
 import User from "../models/User.js";
 import jwt from 'jsonwebtoken';
+import TravelPost from "../models/TravelPost.js";
 
 // Create new user
 export const postUser = async (req,res) => {
@@ -63,8 +64,14 @@ export const updateUser = async (req,res) => {
             res.status(400).json({ success: false, message: "User not found"});
         }
 
+        let profilePictureChanged = false;
+
         if (firstName) user.firstName = firstName;
         if (lastName) user.lastName = lastName;
+        if (profilePicture) {
+            profilePictureChanged = profilePicture !== user.profilePicture; // Check if it has changed
+            user.profilePicture = profilePicture;
+        }
         // if (password) {
         //     const saltsRound = 10;
         //     const hashedPassword = await bcrypt.hash(password, saltsRound);
@@ -75,6 +82,14 @@ export const updateUser = async (req,res) => {
         if (profilePicture) user.profilePicture = profilePicture;
 
         const updateUser = await user.save();
+
+        // Update travel posts if profile picture changes
+        if (profilePictureChanged) {
+            await TravelPost.updateMany(
+                { firstName: updateUser.firstName, lastName: updateUser.lastName },
+                { $set: { userProfile: updateUser.profilePicture } }
+            );
+        }
 
         res.status(200).json({ success: true, data: updateUser});  
     }
