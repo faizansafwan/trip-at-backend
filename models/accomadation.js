@@ -9,7 +9,7 @@ const accomadationSchema = new mongoose.Schema({
     type: {type: String, required: true},
     unit: {type: String},
     price: {type: Number},
-    images: [ {type: String} ],
+    images: [ {type: String, required: true} ],
     datePosted: { type: Date, default: Date.now() },  
 });
 
