@@ -12,6 +12,7 @@ const travelSchema = new mongoose.Schema(
     negativeDesc: {type: String},
     images: [ {type: String} ],
     additionalInfo: {type: String, required: true},
+    registeredDate: {type: Date, default: Date.now()},
     }
 );
 
