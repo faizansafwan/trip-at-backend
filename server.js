@@ -13,7 +13,7 @@ import Accomadation from "./routes/Accomadation.js";
 const app = express();
 
 app.use(cors({
-    origin: 'http://localhost:3000', // Explicitly allow frontend origin
+    origin: 'https://trip-at-frontend.vercel.app', // Explicitly allow frontend origin
     credentials: true,
 }));
 app.use(express.json());
