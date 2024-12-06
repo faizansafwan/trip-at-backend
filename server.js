@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import User from "./routes/User.js";
 import TravelPost from "./routes/TravelPost.js";
-import Contact from "./routes/contact.js";
+import Contact from "./routes/Contact.js";
 import Budget from "./routes/Budget.js";
 import Accomadation from "./routes/Accomadation.js";
 
