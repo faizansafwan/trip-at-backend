@@ -12,10 +12,18 @@ import Accomadation from "./routes/Accomadation.js";
 
 const app = express();
 
+const allowedOrigins = ['http://localhost:3000', 'https://trip-at-frontend-o3es.vercel.app/'];
 app.use(cors({
-    origin: 'https://trip-at-frontend.vercel.app', // Explicitly allow frontend origin
-    credentials: true,
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true
 }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 
