@@ -12,16 +12,17 @@ import Accomadation from "./routes/Accomadation.js";
 
 const app = express();
 
-const allowedOrigins = ['http://localhost:3000', 'https://trip-at-frontend-o3es.vercel.app/'];
+const allowedOrigins = ['http://localhost:3000', 'https://trip-at-one.vercel.app/'];
+
 app.use(cors({
-    origin: function (origin, callback) {
+    origin: (origin, callback) => {
         if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
             callback(new Error('Not allowed by CORS'));
         }
     },
-    credentials: true
+    credentials: true,
 }));
 
 app.use(express.json());
@@ -48,5 +49,5 @@ connection.once( "open", () => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${process.env.PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });
