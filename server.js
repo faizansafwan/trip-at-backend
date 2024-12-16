@@ -12,18 +12,30 @@ dotenv.config();
 
 const app = express();
 
-const allowedOrigins = ['http://localhost:3000', 'https://trip-at-one.vercel.app/'];
+// const allowedOrigins = ['http://localhost:3000', 'https://trip-at-one.vercel.app/'];
+
+// app.use(cors({
+//     origin: (origin, callback) => {
+//         if (!origin || allowedOrigins.includes(origin)) {
+//             callback(null, true);
+//         } else {
+//             callback(new Error('Not allowed by CORS'));
+//         }
+//     },
+//     credentials: true, // Required to allow cookies/auth headers
+//     optionsSuccessStatus: 200, // For legacy browsers (IE11, various SmartTVs) that choke on 204
+
+// }));
 
 app.use(cors({
-    origin: (origin, callback) => {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    credentials: true,
+    origin: '*', // Allow requests from all origins
 }));
+
+// Handle preflight requests for all routes
+// app.options('*', cors({
+//     origin: allowedOrigins,
+//     credentials: true
+// }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
