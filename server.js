@@ -8,7 +8,7 @@ import TravelPost from "./routes/TravelPost.js";
 import Contact from "./routes/Contact.js";
 import Budget from "./routes/Budget.js";
 import Accomadation from "./routes/Accomadation.js";
-
+dotenv.config();
 
 const app = express();
 
@@ -38,9 +38,15 @@ app.get( '/', (req,res) => {
     res.send("Check get request");
 });
 
-dotenv.config();
+
 const uri = process.env.ATLAS_URL;
-mongoose.connect( uri, {});
+mongoose.connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+.then(() => console.log("MongoDB database connection established successfully"))
+.catch((error) => console.error("Error connecting to MongoDB:", error));
+
 
 const connection = mongoose.connection;
 connection.once( "open", () => {
